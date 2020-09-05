@@ -12,7 +12,8 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'networkx',
-    'node2vec'
+    'node2vec',
+    'xmltodict'
 ]
 
 setup_requirements = ['pytest-runner', ]
