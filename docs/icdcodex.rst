@@ -4,19 +4,19 @@ icdcodex package
 Submodules
 ----------
 
-icdcodex.icdcodex module
-------------------------
+icdcodex.Icd2Vec module
+-----------------------
 
-.. automodule:: icdcodex.icdcodex
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. automodule:: icdcodex.Icd2Vec
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 
 Module contents
 ---------------
 
 .. automodule:: icdcodex
-   :members:
-   :undoc-members:
-   :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:
