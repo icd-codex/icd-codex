@@ -13,6 +13,7 @@ sphinx-rtd-theme
 recommonmark
 
 # notebook demonstration libs
+jupyter
 jupyterlab
 pandas
 xgboost
