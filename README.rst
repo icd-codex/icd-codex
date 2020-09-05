@@ -10,7 +10,11 @@ icdcodex
         :target: https://icdcodex.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-ICD embedding for machine learning, created for MedHacks 2020 (http://medhacks.org/?fbclid=IwAR0L-JQotA_wdVe5PTySOrPMCCknlZBb8xlHmwCkcyWPEFwTeVlk3jkyuJg).
+ICD embedding for machine learning, created for `MedHacks2020 ❤️
+<http://medhacks.org/?fbclid=IwAR0L-JQotA_wdVe5PTySOrPMCCknlZBb8xlHmwCkcyWPEFwTeVlk3jkyuJg/>`_.
+
+* Free software: MIT license
+* Documentation: https://icdcodex.readthedocs.io.
 
 What is Medhacks?
 -----------------
@@ -33,10 +37,6 @@ The Team
 * Natasha Nehra
 * Tejas Patel
 * Hamrish Saravanakumar
-
-
-* Free software: MIT license
-* Documentation: https://icdcodex.readthedocs.io.
 
 
 Features
