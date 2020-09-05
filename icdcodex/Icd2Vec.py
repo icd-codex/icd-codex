@@ -1,9 +1,10 @@
 """Build a vector embedding from a networkX representation of the ICD hierarchy"""
 
-from typing import Sequence
+from typing import Sequence, Union
 import networkx as nx
 import numpy as np
 from node2vec import Node2Vec
+
 
 class Icd2Vec:
     def __init__(
@@ -34,7 +35,7 @@ class Icd2Vec:
         self.node2vec = None
 
     def fit(self, icd_hierarchy: nx.Graph, workers=1, **kwargs):
-        """[summary]
+        """construct vector embedding of all ICD codes
 
         Args:
             icd_hierarchy (nx.Graph): Graph of ICD hierarchy
@@ -50,27 +51,32 @@ class Icd2Vec:
         ).fit(window=self.window, **kwargs)
 
     def transform(self, icd_codes: Sequence[str]) -> np.ndarray:
-        """[summary]
+        """encode ICD code(s) into a matrix of continuously-valued representations of
+        shape m x n where m = self.num_embedding_dimensions and n = len(icd_codes)
 
         Args:
-            icd_codes (Sequence[str]): [description]
+            icd_codes (Sequence[str]): list of icd code(s)
 
         Raises:
-            ValueError: [description]
+            ValueError: If model is not fit beforehand
 
         Returns:
-            np.ndarray: [description]
+            np.ndarray: continuously-valued representations if ICD codes
         """
         if not self.node2vec:
-            raise ValueError
+            raise ValueError("model needs to be fit before")
+        return np.stack(
+            [self.node2vec.wv.get_vector(icd_code) for icd_code in icd_codes]
+        )
 
-    def vec2code(self, vecs) -> Sequence[str]:
-        """[summary]
+    def vec2code(self, vecs: Union[Sequence[Sequence], np.ndarray]) -> Sequence[str]:
+        """decode continuous representation of ICD code(s) into the code itself
 
         Args:
-            vecs ([type]): [description]
+            vecs (Union[Sequence[Sequence], np.ndarray]): continuous representation of ICD code(s)
 
         Returns:
-            Sequence[str]: [description]
+            Sequence[str]: ICD code(s)
         """
-        raise NotImplementedError
+        vecs = np.array(vecs).reshape(-1, 1)
+        return [self.node2vec.wv.most_similar(vec) for vec in vecs]
