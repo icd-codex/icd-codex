@@ -11,3 +11,9 @@ pytest==4.6.5
 pytest-runner==5.1
 sphinx-rtd-theme
 recommonmark
+
+# notebook demonstration libs
+jupyterlab
+pandas
+xgboost
+scikit-learn
