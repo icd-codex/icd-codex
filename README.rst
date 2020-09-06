@@ -41,8 +41,8 @@ The Team
 Features
 --------
 
-* Curated networkX graphs representing ICD hierarchies
-* A simple API to generate 
+* Curated networkX graphs representing ICD9 and ICD10 hierarchies
+* A simple API to generate continuous embeddings for these hierarchies
 
 Credits
 -------
