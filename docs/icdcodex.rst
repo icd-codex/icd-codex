@@ -1,8 +1,23 @@
 icdcodex package
 ================
 
+Subpackages
+-----------
+
+.. toctree::
+
+    icdcodex.data
+
 Submodules
 ----------
+
+icdcodex.datacleaning module
+----------------------------
+
+.. automodule:: icdcodex.datacleaning
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 icdcodex.hierarchy module
 -------------------------
