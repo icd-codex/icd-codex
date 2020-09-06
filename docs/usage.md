@@ -5,7 +5,7 @@ To use icdcodex in a project
 ```python
     from icdcodex import icd2vec, hierarchy
     embedder = icd2vec.Icd2Vec(num_embedding_dimensions=64)
-    embedder.fit(hierarchy.icd9hierarchy())
+    embedder.fit(*hierarchy.icd9hierarchy())
     y = embedder.to_vec(y)
 ```
 
@@ -89,7 +89,7 @@ And compare it to our embedding model
 
 ```python
 embedder = icd2vec.Icd2Vec(num_embedding_dimensions=64, walk_length=10, num_walks=200, workers=-1)
-embedder.fit(icd_codes, G)
+embedder.fit(G, icd_codes)
 y_train_continuous = embedder.to_vec(y_train.reshape(-1))
 clf = RandomForestRegressor()
 clf.fit(X_train, y_train_continuous)

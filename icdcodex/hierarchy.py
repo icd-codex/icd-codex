@@ -6,6 +6,14 @@ import networkx as nx
 
 
 def icd9hierarchy(fp):
+    """build the icd9 hierarchy
+
+    Args:
+        fp (Pathlike): Path to hierarchy spec, available at https://github.com/kshedden/icd9/blob/master/icd9/resources/icd9Hierarchy.json
+
+    Returns:
+        icd9 hierarchy (nx.Graph) and ICD9 codes (List[str])
+    """
     hierarchy = pd.read_json(fp)
     G = nx.Graph()
     G.add_node("root")
@@ -35,12 +43,21 @@ def icd9hierarchy(fp):
     return G, icd_codes
 
 
-def icd10hierarchy(fp) -> nx.Graph:
+def icd10hierarchy(fp):
+    """build the icd10 hierarchy
+
+    Args:
+        fp (Pathlike): Path to hierarchy spec (Tabular.xml) available at https://www.cms.gov/Medicare/Coding/ICD10/Downloads/2016-Code-Descriptions-in-Tabular-Order.zip
+
+    Returns:
+        icd10 hierarchy (nx.Graph) and ICD10 codes (List[str])
+    """
     with open(fp) as fd:
         doc = xmltodict.parse(fd.read())
     j = doc["ICD10CM.tabular"]["chapter"]
     G = nx.Graph()
     G.add_node("ICD")  #  <- potentially remove
+    icd10_codes = []
     for chapter in range(len(j)):
         for section in range(len(j[chapter])):
             section = str(section)
@@ -58,6 +75,7 @@ def icd10hierarchy(fp) -> nx.Graph:
                             G.add_edge(j[chapter]["section"][section]["@id"], x)
                             try:
                                 y = j[chapter]["section"][section]["diag"][diag]["diag"][diag_2]["name"]
+                                icd10_codes.append(y)
                                 G.add_node(y)
                                 G.add_edge(x, y)
                             except (KeyError, IndexError):
@@ -67,4 +85,4 @@ def icd10hierarchy(fp) -> nx.Graph:
             except (KeyError, IndexError):
                 break
     G.remove_nodes_from(nx.isolates(G))
-    return G
+    return G, icd10_codes
