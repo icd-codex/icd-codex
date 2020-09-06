@@ -6,8 +6,8 @@ icdcodex
         :target: https://pypi.python.org/pypi/icdcodex
 
 
-.. image:: https://readthedocs.org/projects/icdcodex/badge/?version=latest
-        :target: https://icdcodex.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/icd-codex/badge/?version=latest
+        :target: https://icd-codex.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
 ICD embedding for machine learning, created for `MedHacks2020 ❤️
