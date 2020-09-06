@@ -18,3 +18,8 @@ jupyterlab
 pandas
 xgboost
 scikit-learn
+
+# libs
+networkx
+node2vec
+xmltodict
