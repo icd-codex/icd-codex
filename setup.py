@@ -22,7 +22,7 @@ test_requirements = ['pytest>=3', ]
 
 setup(
     author="Jeremy Fisher",
-    author_email='jeremyf@cmul.edu',
+    author_email='jeremyf@cmu.edu',
     python_requires='>=3.5',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
