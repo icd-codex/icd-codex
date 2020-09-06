@@ -23,7 +23,7 @@ test_requirements = ['pytest>=3', ]
 setup(
     author="Jeremy Fisher",
     author_email='jeremyf@cmu.edu',
-    python_requires='>=3.5',
+    python_requires='>=3.7',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
@@ -44,7 +44,7 @@ setup(
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/jeremyadamsfisher/icdcodex',
+    url='https://github.com/icd-codex/icd-codex',
     version='0.2.0',
-    zip_safe=False,
+    zip_safe=True,
 )
