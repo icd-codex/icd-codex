@@ -5,7 +5,7 @@ To use icdcodex in a project
 ```python
     from icdcodex import icd2vec, hierarchy
     embedder = icd2vec.Icd2Vec(num_embedding_dimensions=64)
-    embedder.fit(hierarchy.icd9hierarchy())
+    embedder.fit(*hierarchy.icd9hierarchy())
     y = embedder.to_vec(y)
 ```
 

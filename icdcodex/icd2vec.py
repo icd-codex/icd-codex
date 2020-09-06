@@ -12,8 +12,8 @@ class Icd2Vec:
     def __init__(
         self,
         num_embedding_dimensions: int = 128,
-        num_walks: int = None,
-        walk_length: int = None,
+        num_walks: int = 10,
+        walk_length: int = 10,
         window: int = 4,
         workers=1,
         **kwargs
@@ -39,7 +39,7 @@ class Icd2Vec:
         self.node2vec_kwargs = kwargs
         self.node2vec = None
 
-    def fit(self, icd_codes, icd_hierarchy: nx.Graph, **kwargs):
+    def fit(self, icd_hierarchy: nx.Graph, icd_codes: Sequence[str], **kwargs):
         """construct vector embedding of all ICD codes
 
         Args:
