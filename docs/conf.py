@@ -27,19 +27,25 @@ release = '09/06/2020'
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones.
+# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.napoleon',
+    'sphinx_rtd_theme'
 ]
 
 
+# The suffix(es) of source filenames.
+# You can specify multiple suffix as a list of string:
 from recommonmark.parser import CommonMarkParser
-
+source_suffix = ['.rst', '.md']
 source_parsers = {
     '.md': CommonMarkParser,
 }
-
-source_suffix = ['.rst', '.md']
+# General information about the project.
+project = 'icdcodex'
+author = 'Alhusain Abdalla, Hamrish Saravanakumar, Jeremy Fisher, Natasha Nehra, Tejas Patel'
 
 
 # Add any paths that contain templates here, relative to this directory.
@@ -63,7 +69,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 
 
 # Add any paths that contain custom static files (such as style sheets) here,
