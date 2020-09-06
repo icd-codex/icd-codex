@@ -48,14 +48,17 @@ def icd10hierarchy(fp) -> nx.Graph:
             G.add_edge("ICD", section)  #  <- potentially remove
             try:
                 for diag in range(len(j[chapter]["section"][section])):
-                    G.add_node(x := j[chapter]["section"][section]["@id"])
+                    x = j[chapter]["section"][section]["@id"]
+                    G.add_node(x)
                     G.add_edge(section, x)
                     try:
                         for diag_2 in range(len(j[chapter]["section"][section]["diag"][diag])):
-                            G.add_node(x := str(j[chapter]["section"][section]["diag"][diag]["name"]))
+                            x = str(j[chapter]["section"][section]["diag"][diag]["name"])
+                            G.add_node(x)
                             G.add_edge(j[chapter]["section"][section]["@id"], x)
                             try:
-                                G.add_node(y := j[chapter]["section"][section]["diag"][diag]["diag"][diag_2]["name"])
+                                y = j[chapter]["section"][section]["diag"][diag]["diag"][diag_2]["name"]
+                                G.add_node(y)
                                 G.add_edge(x, y)
                             except (KeyError, IndexError):
                                 break
