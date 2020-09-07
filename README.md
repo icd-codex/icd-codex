@@ -8,7 +8,7 @@
 > The International Classification of Diseases, Clinical Modification is used to code and classify morbidity data from the inpatient and outpatient records, physician offices, and most National Center for Health Statistics (NCHS) surveys.
 > [https://www.cdc.gov/nchs/icd/index.htm](https://www.cdc.gov/nchs/icd/index.htm)
 
-Thousands of Americans are wrongly misquoted on their health insurance yearly due to ICD miscodes. However, ICD coding is laborous it is difficult to automate by machine learning because the output space is enormous. For example, ICD-10 CM (clinical modification) has over 70,000 codes and growing. `icdcodex` has two features that make ICD classification more amenable to modeling.
+Thousands of Americans are wrongly misquoted on their health insurance yearly due to ICD miscodes. While ICD coding is tedious and labour-intensive, it is difficult to automate by machine learning because the output space is enormous. For example, ICD-10 CM (clinical modification) has over 70,000 codes and growing. `icdcodex` has two features that make ICD classification more amenable to modeling.
 - Access to a networkx tree representation of the ICD9 and ICD10 hierarchies
 - Vector embeddings of ICD codes (including pre-computed embeddings and )
 
