@@ -3,22 +3,12 @@
 """Tests for `icdcodex` package."""
 
 import pytest
+from icdcodex import hierarchy as h, icd2vec as iv, datacleaning as cleaning
 
+def test_encode_decode_icd9():
+    G, _ = h.icd9hierarchy()
+    G_orig, _ = cleaning.build_icd9_hierarchy("nbexamples/icd9Hierarchy.json")
+    assert set(G.nodes()) == set(G_orig.nodes())
 
-from icdcodex import icdcodex
-
-
-@pytest.fixture
-def response():
-    """Sample pytest fixture.
-
-    See more at: http://doc.pytest.org/en/latest/fixture.html
-    """
-    # import requests
-    # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
-
-
-def test_content(response):
-    """Sample pytest test function with the pytest fixture as an argument."""
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
+def test_encode_decode_icd10():
+    raise NotImplementedError
