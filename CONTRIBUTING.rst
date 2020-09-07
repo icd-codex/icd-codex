@@ -15,7 +15,7 @@ Types of Contributions
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/jeremyadamsfisher/icdcodex/issues.
+Report bugs at https://github.com/icdcodex/icdcodex/issues.
 
 If you are reporting a bug, please include:
 
