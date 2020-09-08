@@ -11,7 +11,7 @@ Thousands of Americans are misquoted on their health insurance yearly due to ICD
 
 `icdcodex` has two features that make ICD classification more amenable to modeling:
 - Access to a `networkx` tree representation of the ICD9 and ICD10 hierarchies
-- Vector embeddings of ICD codes (including pre-computed embeddings and )
+- Vector embeddings of ICD codes (including pre-computed embeddings and an interface to create new embeddings)
 
 ## Example Code
 ```python
