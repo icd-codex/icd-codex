@@ -14,6 +14,23 @@ physionet-data`.
 
 ```sql
 SELECT
+    i.seq_num, i.subject_id, i.icd9_code, j.los, k.gender, k.dob, k.dod, l.admittime
+FROM `physionet-data.mimiciii_demo.diagnoses_icd` as i
+    INNER JOIN
+        `physionet-data.mimiciii_demo.icustays` as j
+        ON i.hadm_id = j.hadm_id
+    INNER JOIN
+        `physionet-data.mimiciii_demo.patients` as k
+        ON i.subject_id = k.subject_id
+    INNER JOIN
+        `physionet-data.mimiciii_demo.admissions` as l
+        ON i.hadm_id = l.hadm_id
+```
+
+[After gaining access to the full database](https://mimic.physionet.org/gettingstarted/access/), one can follow along running the following SQL query on Big Query:
+
+```sql
+SELECT
     i.seq_num, i.subject_id, i.icd9_code, j.los, k.gender, k.dob, k.dod, l.admittime, m.curr_service, n.drg_severity, n.drg_mortality
 FROM `physionet-data.mimiciii_clinical.diagnoses_icd` as i
     INNER JOIN
@@ -31,23 +48,6 @@ FROM `physionet-data.mimiciii_clinical.diagnoses_icd` as i
     INNER JOIN
         `physionet-data.mimiciii_clinical.drgcodes` as n
         ON i.hadm_id = n.hadm_id
-```
-
-[After gaining access to the full database](https://mimic.physionet.org/gettingstarted/access/), one can follow along running the following SQL query on Big Query:
-
-```sql
-SELECT
-    i.seq_num, i.subject_id, i.icd9_code, j.los, k.gender, k.dob, k.dod, l.admittime
-FROM `physionet-data.mimiciii_demo.diagnoses_icd` as i
-    INNER JOIN
-        `physionet-data.mimiciii_demo.icustays` as j
-        ON i.hadm_id = j.hadm_id
-    INNER JOIN
-        `physionet-data.mimiciii_demo.patients` as k
-        ON i.subject_id = k.subject_id
-    INNER JOIN
-        `physionet-data.mimiciii_demo.admissions` as l
-        ON i.hadm_id = l.hadm_id
 ```
 
 Save the results as `data.csv`. In this tutorial, we use the full dataset because it has more features and results in a more accurate model. We'll do some feature engineering to give the model something with which to predict ICD codes.
