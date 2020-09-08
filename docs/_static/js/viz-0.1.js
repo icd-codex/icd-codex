@@ -1,86 +1,80 @@
 'use strict';
 
 function getForceLayoutElement(nodes, links, width, height) {
-    const simulation = d3.forceSimulation(nodes)
-        .force("link", d3.forceLink(links).id(d => d.id))
-        .force("charge", d3.forceManyBody())
-        .force("center", d3.forceCenter(width / 2, height / 2));
-
     const svg = d3.create("svg")
         .attr("viewBox", [0, 0, width, height]);
 
+    const simulation = d3.forceSimulation()
+        .force("link", d3.forceLink().id(function(d) { return d.id; }))
+        .force("charge", d3.forceManyBody())
+        .force("center", d3.forceCenter(width / 2, height / 2));
+
     const link = svg.append("g")
-        .attr("stroke", "#999")
-        .attr("stroke-opacity", 0.6)
+        .attr("class", "links")
         .selectAll("line")
         .data(links)
-        .join("line")
-        .attr("stroke-width", d => Math.sqrt(d.value));
+        .enter().append("line");
 
     const node = svg.append("g")
-        .attr("stroke", "#fff")
-        .attr("stroke-width", 1.5)
-        .selectAll("circle")
+        .attr("class", "nodes")
+        .selectAll("g")
         .data(nodes)
-        .join("circle")
+        .enter().append("g")
+
+    const circles = node.append("circle")
         .attr("r", 3)
         .attr("fill", "cadetblue")
-        .call(drag(simulation));
-
+        .call(d3.drag()
+            .on("start", function dragstarted(d) {
+                if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            })
+            .on("drag", function dragged(d) {
+                d.fx = d3.event.x;
+                d.fy = d3.event.y;
+            })
+            .on("end", function dragended(d) {
+                if (!d3.event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+        }));
+    
     const labels = node.append("text")
-        .text(d => d.id)
+        .text(function(d) {
+            return d.id;
+        })
         .attr('x', 6)
-        .attr('y', 3);  
-
+        .attr('y', 3)
+        .attr("class", "node-text");
+    
     node.append("title")
-        .text(d => d.id);
+        .text(function(d) { return d.id; });
+    
+    simulation
+        .nodes(nodes)
+        .on("tick", () => {
+            link.attr("x1", function(d) { return d.source.x; })
+                .attr("y1", function(d) { return d.source.y; })
+                .attr("x2", function(d) { return d.target.x; })
+                .attr("y2", function(d) { return d.target.y; });
+        
+            node.attr("transform", function(d) {
+                  return "translate(" + d.x + "," + d.y + ")";
+                })
+          });
 
-    simulation.on("tick", () => {
-        link
-            .attr("x1", d => d.source.x)
-            .attr("y1", d => d.source.y)
-            .attr("x2", d => d.target.x)
-            .attr("y2", d => d.target.y);
-
-        node
-            .attr("cx", d => d.x)
-            .attr("cy", d => d.y);
-    });
-
-    // invalidation.then(() => simulation.stop());
+    simulation.force("link").links(links);
 
     return svg.node();
 }
-
-function drag(simulation) {
   
-    function dragstarted(event) {
-      if (!event.active) simulation.alphaTarget(0.3).restart();
-      event.subject.fx = event.subject.x;
-      event.subject.fy = event.subject.y;
-    }
-    
-    function dragged(event) {
-      event.subject.fx = event.x;
-      event.subject.fy = event.y;
-    }
-    
-    function dragended(event) {
-      if (!event.active) simulation.alphaTarget(0);
-      event.subject.fx = null;
-      event.subject.fy = null;
-    }
-    
-    return d3.drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended);
-}
+
 
 window.addEventListener('load', function() {
     const width  = 400,
           height = 200;
-    const G = {"directed": true, "multigraph": false, "graph": {}, "nodes": [{"id": "ICD9"}, {"id": "Diseases Of The Musculoskeletal System And Connective Tissue"}, {"id": "Diseases Of The Skin And Subcutaneous Tissue"}, {"id": "Congenital Anomalies"}, {"id": "Endocrine, Nutritional And Metabolic Diseases, And Immunity Disorders"}, {"id": "Injury And Poisoning"}, {"id": "Neoplasms"}, {"id": "Diseases Of The Genitourinary System"}, {"id": "Diseases Of The Digestive System"}, {"id": "Symptoms, Signs, And Ill-Defined Conditions"}, {"id": "Diseases Of The Nervous System And Sense Organs"}, {"id": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services"}, {"id": "Diseases Of The Circulatory System"}], "links": [{"source": "ICD9", "target": "Diseases Of The Musculoskeletal System And Connective Tissue"}, {"source": "ICD9", "target": "Diseases Of The Skin And Subcutaneous Tissue"}, {"source": "ICD9", "target": "Congenital Anomalies"}, {"source": "ICD9", "target": "Endocrine, Nutritional And Metabolic Diseases, And Immunity Disorders"}, {"source": "ICD9", "target": "Injury And Poisoning"}, {"source": "ICD9", "target": "Neoplasms"}, {"source": "ICD9", "target": "Diseases Of The Genitourinary System"}, {"source": "ICD9", "target": "Diseases Of The Digestive System"}, {"source": "ICD9", "target": "Symptoms, Signs, And Ill-Defined Conditions"}, {"source": "ICD9", "target": "Diseases Of The Nervous System And Sense Organs"}, {"source": "ICD9", "target": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services"}, {"source": "ICD9", "target": "Diseases Of The Circulatory System"}]};
+    const G = {"directed": true, "multigraph": false, "graph": {}, "nodes": [{"id": "ICD9"}, {"id": "Diseases Of The Musculoskeletal System And Connective Tissue"}, {"id": "Diseases Of The Skin And Subcutaneous Tissue"}, {"id": "Congenital Anomalies"}, {"id": "Endocrine, Nutritional And Metabolic Diseases, And Immunity Disorders"}, {"id": "Injury And Poisoning"}, {"id": "Neoplasms"}, {"id": "Diseases Of The Genitourinary System"}, {"id": "Diseases Of The Digestive System"}, {"id": "Symptoms, Signs, And Ill-Defined Conditions"}, {"id": "Diseases Of The Nervous System And Sense Organs"}, {"id": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services"}, {"id": "Diseases Of The Circulatory System"}, {"id": "Rheumatism, Excluding The Back"}, {"id": "Dorsopathies"}, {"id": "Arthropathies And Related Disorders"}, {"id": "Osteopathies, Chondropathies, And Acquired Musculoskeletal Deformities"}, {"id": "Other Diseases Of Skin And Subcutaneous Tissue"}, {"id": "Infections Of Skin And Subcutaneous Tissue"}, {"id": "Other Inflammatory Conditions Of Skin And Subcutaneous Tissue"}, {"id": "Bulbus cordis anomalies and anomalies of cardiac septal closure"}, {"id": "Anencephalus and similar anomalies"}, {"id": "Other congenital anomalies of digestive system"}, {"id": "Other congenital anomalies of nervous system"}, {"id": "Congenital anomalies of respiratory system"}, {"id": "Congenital anomalies of urinary system"}, {"id": "Other congenital anomalies of heart"}, {"id": "Cleft palate and cleft lip"}, {"id": "Other and unspecified congenital anomalies"}, {"id": "Other congenital anomalies of limbs"}, {"id": "Congenital anomalies of the integument"}, {"id": "Congenital anomalies of eye"}, {"id": "Congenital anomalies of ear face and neck"}, {"id": "Congenital anomalies of genital organs"}, {"id": "Certain congenital musculoskeletal deformities"}, {"id": "Other congenital anomalies of upper alimentary tract"}, {"id": "Chromosomal anomalies"}, {"id": "Spina bifida"}, {"id": "Other congenital musculoskeletal anomalies"}, {"id": "Other congenital anomalies of circulatory system"}, {"id": "Disorders Of Thyroid Gland"}, {"id": "Other Metabolic Disorders And Immunity Disorders"}, {"id": "Nutritional Deficiencies"}, {"id": "Diseases Of Other Endocrine Glands"}, {"id": "Poisoning By Drugs, Medicinals And Biological Substances"}, {"id": "Open Wound Of Upper Limb"}, {"id": "Crushing Injury"}, {"id": "Late Effects Of Injuries, Poisonings, Toxic Effects, And Other External Causes"}, {"id": "Injury To Blood Vessels"}, {"id": "Burns"}, {"id": "Contusion With Intact Skin Surface"}, {"id": "Sprains And Strains Of Joints And Adjacent Muscles"}, {"id": "Fracture Of Lower Limb"}, {"id": "Other And Unspecified Effects Of External Causes"}, {"id": "Intracranial Injury, Excluding Those With Skull Fracture"}, {"id": "Injury To Nerves And Spinal Cord"}, {"id": "Open Wound Of Head, Neck, And Trunk"}, {"id": "Certain Traumatic Complications And Unspecified Injuries"}, {"id": "Fracture Of Upper Limb"}, {"id": "Fracture Of Spine And Trunk"}, {"id": "Open Wound Of Lower Limb"}, {"id": "Internal Injury Of Chest, Abdomen, And Pelvis"}, {"id": "Effects Of Foreign Body Entering Through Orifice"}, {"id": "Toxic Effects Of Substances Chiefly Nonmedicinal As To Source"}, {"id": "Fracture Of Skull"}, {"id": "Complications Of Surgical And Medical Care, Not Elsewhere Classified"}, {"id": "Dislocation"}, {"id": "Superficial Injury"}, {"id": "Malignant Neoplasm Of Bone, Connective Tissue, Skin, And Breast"}, {"id": "Malignant Neoplasm Of Lymphatic And Hematopoietic Tissue"}, {"id": "Neoplasms Of Unspecified Nature"}, {"id": "Malignant Neoplasm Of Other And Unspecified Sites"}, {"id": "Malignant Neoplasm Of Digestive Organs And Peritoneum"}, {"id": "Benign Neoplasms"}, {"id": "Malignant Neoplasm Of Lip, Oral Cavity, And Pharynx"}, {"id": "Malignant Neoplasm Of Genitourinary Organs"}, {"id": "Carcinoma In Situ"}, {"id": "Neoplasms Of Uncertain Behavior"}, {"id": "Malignant Neoplasm Of Respiratory And Intrathoracic Organs"}, {"id": "Other Diseases Of Urinary System"}, {"id": "Inflammatory Disease Of Female Pelvic Organs"}, {"id": "Other Disorders Of Female Genital Tract"}, {"id": "Diseases Of Male Genital Organs"}, {"id": "Nephritis, Nephrotic Syndrome, And Nephrosis"}, {"id": "Disorders Of Breast"}, {"id": "Other Diseases Of Intestines And Peritoneum"}, {"id": "Other Diseases Of Digestive System"}, {"id": "Hernia Of Abdominal Cavity"}, {"id": "Appendicitis"}, {"id": "Noninfective Enteritis And Colitis"}, {"id": "Diseases Of Esophagus, Stomach, And Duodenum"}, {"id": "Diseases Of Oral Cavity, Salivary Glands, And Jaws"}, {"id": "Nonspecific Abnormal Findings"}, {"id": "Ill-Defined And Unknown Causes Of Morbidity And Mortality"}, {"id": "Symptoms"}, {"id": "Inflammatory Diseases Of The Central Nervous System"}, {"id": "Other Disorders Of The Central Nervous System"}, {"id": "Hereditary And Degenerative Diseases Of The Central Nervous System"}, {"id": "Diseases Of The Ear And Mastoid Process"}, {"id": "Disorders Of The Peripheral Nervous System"}, {"id": "Pain"}, {"id": "Other Headache Syndromes"}, {"id": "Disorders Of The Eye And Adnexa"}, {"id": "Retained Foreign Body"}, {"id": "Persons Encountering Health Services In Circumstances Related To Reproduction And Development"}, {"id": "Other Suspected Conditions Not Found"}, {"id": "Persons Without Reported Diagnosis Encountered During Examination And Investigation Of Individuals And Populations"}, {"id": "Estrogen Receptor Status"}, {"id": "Persons Encountering Health Services For Specific Procedures And Aftercare"}, {"id": "Liveborn Infants According To Type Of Birth"}, {"id": "Persons Encountering Health Services In Other Circumstances"}, {"id": "Multiple Gestation Placenta Status"}, {"id": "Body Mass Index"}, {"id": "Genetics"}, {"id": "Persons With Potential Health Hazards Related To Personal And Family History"}, {"id": "Persons With Potential Health Hazards Related To Communicable Diseases"}, {"id": "Acquired Absence Of Other Organs And Tissue"}, {"id": "Persons With A Condition Influencing Their Health Status"}, {"id": "Other Specified Personal Exposures And History Presenting Hazards To Health"}, {"id": "Acute Rheumatic Fever"}, {"id": "Diseases Of Pulmonary Circulation"}, {"id": "Chronic Rheumatic Heart Disease"}, {"id": "Cerebrovascular Disease"}, {"id": "Diseases Of Veins And Lymphatics, And Other Diseases Of Circulatory System"}], "links": [{"source": "ICD9", "target": "Diseases Of The Musculoskeletal System And Connective Tissue"}, {"source": "ICD9", "target": "Diseases Of The Skin And Subcutaneous Tissue"}, {"source": "ICD9", "target": "Congenital Anomalies"}, {"source": "ICD9", "target": "Endocrine, Nutritional And Metabolic Diseases, And Immunity Disorders"}, {"source": "ICD9", "target": "Injury And Poisoning"}, {"source": "ICD9", "target": "Neoplasms"}, {"source": "ICD9", "target": "Diseases Of The Genitourinary System"}, {"source": "ICD9", "target": "Diseases Of The Digestive System"}, {"source": "ICD9", "target": "Symptoms, Signs, And Ill-Defined Conditions"}, {"source": "ICD9", "target": "Diseases Of The Nervous System And Sense Organs"}, {"source": "ICD9", "target": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services"}, {"source": "ICD9", "target": "Diseases Of The Circulatory System"}, {"source": "Diseases Of The Musculoskeletal System And Connective Tissue", "target": "Rheumatism, Excluding The Back"}, {"source": "Diseases Of The Musculoskeletal System And Connective Tissue", "target": "Dorsopathies"}, {"source": "Diseases Of The Musculoskeletal System And Connective Tissue", "target": "Arthropathies And Related Disorders"}, {"source": "Diseases Of The Musculoskeletal System And Connective Tissue", "target": "Osteopathies, Chondropathies, And Acquired Musculoskeletal Deformities"}, {"source": "Diseases Of The Skin And Subcutaneous Tissue", "target": "Other Diseases Of Skin And Subcutaneous Tissue"}, {"source": "Diseases Of The Skin And Subcutaneous Tissue", "target": "Infections Of Skin And Subcutaneous Tissue"}, {"source": "Diseases Of The Skin And Subcutaneous Tissue", "target": "Other Inflammatory Conditions Of Skin And Subcutaneous Tissue"}, {"source": "Congenital Anomalies", "target": "Bulbus cordis anomalies and anomalies of cardiac septal closure"}, {"source": "Congenital Anomalies", "target": "Anencephalus and similar anomalies"}, {"source": "Congenital Anomalies", "target": "Other congenital anomalies of digestive system"}, {"source": "Congenital Anomalies", "target": "Other congenital anomalies of nervous system"}, {"source": "Congenital Anomalies", "target": "Congenital anomalies of respiratory system"}, {"source": "Congenital Anomalies", "target": "Congenital anomalies of urinary system"}, {"source": "Congenital Anomalies", "target": "Other congenital anomalies of heart"}, {"source": "Congenital Anomalies", "target": "Cleft palate and cleft lip"}, {"source": "Congenital Anomalies", "target": "Other and unspecified congenital anomalies"}, {"source": "Congenital Anomalies", "target": "Other congenital anomalies of limbs"}, {"source": "Congenital Anomalies", "target": "Congenital anomalies of the integument"}, {"source": "Congenital Anomalies", "target": "Congenital anomalies of eye"}, {"source": "Congenital Anomalies", "target": "Congenital anomalies of ear face and neck"}, {"source": "Congenital Anomalies", "target": "Congenital anomalies of genital organs"}, {"source": "Congenital Anomalies", "target": "Certain congenital musculoskeletal deformities"}, {"source": "Congenital Anomalies", "target": "Other congenital anomalies of upper alimentary tract"}, {"source": "Congenital Anomalies", "target": "Chromosomal anomalies"}, {"source": "Congenital Anomalies", "target": "Spina bifida"}, {"source": "Congenital Anomalies", "target": "Other congenital musculoskeletal anomalies"}, {"source": "Congenital Anomalies", "target": "Other congenital anomalies of circulatory system"}, {"source": "Endocrine, Nutritional And Metabolic Diseases, And Immunity Disorders", "target": "Disorders Of Thyroid Gland"}, {"source": "Endocrine, Nutritional And Metabolic Diseases, And Immunity Disorders", "target": "Other Metabolic Disorders And Immunity Disorders"}, {"source": "Endocrine, Nutritional And Metabolic Diseases, And Immunity Disorders", "target": "Nutritional Deficiencies"}, {"source": "Endocrine, Nutritional And Metabolic Diseases, And Immunity Disorders", "target": "Diseases Of Other Endocrine Glands"}, {"source": "Injury And Poisoning", "target": "Poisoning By Drugs, Medicinals And Biological Substances"}, {"source": "Injury And Poisoning", "target": "Open Wound Of Upper Limb"}, {"source": "Injury And Poisoning", "target": "Crushing Injury"}, {"source": "Injury And Poisoning", "target": "Late Effects Of Injuries, Poisonings, Toxic Effects, And Other External Causes"}, {"source": "Injury And Poisoning", "target": "Injury To Blood Vessels"}, {"source": "Injury And Poisoning", "target": "Burns"}, {"source": "Injury And Poisoning", "target": "Contusion With Intact Skin Surface"}, {"source": "Injury And Poisoning", "target": "Sprains And Strains Of Joints And Adjacent Muscles"}, {"source": "Injury And Poisoning", "target": "Fracture Of Lower Limb"}, {"source": "Injury And Poisoning", "target": "Other And Unspecified Effects Of External Causes"}, {"source": "Injury And Poisoning", "target": "Intracranial Injury, Excluding Those With Skull Fracture"}, {"source": "Injury And Poisoning", "target": "Injury To Nerves And Spinal Cord"}, {"source": "Injury And Poisoning", "target": "Open Wound Of Head, Neck, And Trunk"}, {"source": "Injury And Poisoning", "target": "Certain Traumatic Complications And Unspecified Injuries"}, {"source": "Injury And Poisoning", "target": "Fracture Of Upper Limb"}, {"source": "Injury And Poisoning", "target": "Fracture Of Spine And Trunk"}, {"source": "Injury And Poisoning", "target": "Open Wound Of Lower Limb"}, {"source": "Injury And Poisoning", "target": "Internal Injury Of Chest, Abdomen, And Pelvis"}, {"source": "Injury And Poisoning", "target": "Effects Of Foreign Body Entering Through Orifice"}, {"source": "Injury And Poisoning", "target": "Toxic Effects Of Substances Chiefly Nonmedicinal As To Source"}, {"source": "Injury And Poisoning", "target": "Fracture Of Skull"}, {"source": "Injury And Poisoning", "target": "Complications Of Surgical And Medical Care, Not Elsewhere Classified"}, {"source": "Injury And Poisoning", "target": "Dislocation"}, {"source": "Injury And Poisoning", "target": "Superficial Injury"}, {"source": "Neoplasms", "target": "Malignant Neoplasm Of Bone, Connective Tissue, Skin, And Breast"}, {"source": "Neoplasms", "target": "Malignant Neoplasm Of Lymphatic And Hematopoietic Tissue"}, {"source": "Neoplasms", "target": "Neoplasms Of Unspecified Nature"}, {"source": "Neoplasms", "target": "Malignant Neoplasm Of Other And Unspecified Sites"}, {"source": "Neoplasms", "target": "Malignant Neoplasm Of Digestive Organs And Peritoneum"}, {"source": "Neoplasms", "target": "Benign Neoplasms"}, {"source": "Neoplasms", "target": "Malignant Neoplasm Of Lip, Oral Cavity, And Pharynx"}, {"source": "Neoplasms", "target": "Malignant Neoplasm Of Genitourinary Organs"}, {"source": "Neoplasms", "target": "Carcinoma In Situ"}, {"source": "Neoplasms", "target": "Neoplasms Of Uncertain Behavior"}, {"source": "Neoplasms", "target": "Malignant Neoplasm Of Respiratory And Intrathoracic Organs"}, {"source": "Diseases Of The Genitourinary System", "target": "Other Diseases Of Urinary System"}, {"source": "Diseases Of The Genitourinary System", "target": "Inflammatory Disease Of Female Pelvic Organs"}, {"source": "Diseases Of The Genitourinary System", "target": "Other Disorders Of Female Genital Tract"}, {"source": "Diseases Of The Genitourinary System", "target": "Diseases Of Male Genital Organs"}, {"source": "Diseases Of The Genitourinary System", "target": "Nephritis, Nephrotic Syndrome, And Nephrosis"}, {"source": "Diseases Of The Genitourinary System", "target": "Disorders Of Breast"}, {"source": "Diseases Of The Digestive System", "target": "Other Diseases Of Intestines And Peritoneum"}, {"source": "Diseases Of The Digestive System", "target": "Other Diseases Of Digestive System"}, {"source": "Diseases Of The Digestive System", "target": "Hernia Of Abdominal Cavity"}, {"source": "Diseases Of The Digestive System", "target": "Appendicitis"}, {"source": "Diseases Of The Digestive System", "target": "Noninfective Enteritis And Colitis"}, {"source": "Diseases Of The Digestive System", "target": "Diseases Of Esophagus, Stomach, And Duodenum"}, {"source": "Diseases Of The Digestive System", "target": "Diseases Of Oral Cavity, Salivary Glands, And Jaws"}, {"source": "Symptoms, Signs, And Ill-Defined Conditions", "target": "Nonspecific Abnormal Findings"}, {"source": "Symptoms, Signs, And Ill-Defined Conditions", "target": "Ill-Defined And Unknown Causes Of Morbidity And Mortality"}, {"source": "Symptoms, Signs, And Ill-Defined Conditions", "target": "Symptoms"}, {"source": "Diseases Of The Nervous System And Sense Organs", "target": "Inflammatory Diseases Of The Central Nervous System"}, {"source": "Diseases Of The Nervous System And Sense Organs", "target": "Other Disorders Of The Central Nervous System"}, {"source": "Diseases Of The Nervous System And Sense Organs", "target": "Hereditary And Degenerative Diseases Of The Central Nervous System"}, {"source": "Diseases Of The Nervous System And Sense Organs", "target": "Diseases Of The Ear And Mastoid Process"}, {"source": "Diseases Of The Nervous System And Sense Organs", "target": "Disorders Of The Peripheral Nervous System"}, {"source": "Diseases Of The Nervous System And Sense Organs", "target": "Pain"}, {"source": "Diseases Of The Nervous System And Sense Organs", "target": "Other Headache Syndromes"}, {"source": "Diseases Of The Nervous System And Sense Organs", "target": "Disorders Of The Eye And Adnexa"}, {"source": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services", "target": "Retained Foreign Body"}, {"source": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services", "target": "Persons Encountering Health Services In Circumstances Related To Reproduction And Development"}, {"source": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services", "target": "Other Suspected Conditions Not Found"}, {"source": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services", "target": "Persons Without Reported Diagnosis Encountered During Examination And Investigation Of Individuals And Populations"}, {"source": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services", "target": "Estrogen Receptor Status"}, {"source": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services", "target": "Persons Encountering Health Services For Specific Procedures And Aftercare"}, {"source": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services", "target": "Liveborn Infants According To Type Of Birth"}, {"source": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services", "target": "Persons Encountering Health Services In Other Circumstances"}, {"source": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services", "target": "Multiple Gestation Placenta Status"}, {"source": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services", "target": "Body Mass Index"}, {"source": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services", "target": "Genetics"}, {"source": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services", "target": "Persons With Potential Health Hazards Related To Personal And Family History"}, {"source": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services", "target": "Persons With Potential Health Hazards Related To Communicable Diseases"}, {"source": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services", "target": "Acquired Absence Of Other Organs And Tissue"}, {"source": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services", "target": "Persons With A Condition Influencing Their Health Status"}, {"source": "Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services", "target": "Other Specified Personal Exposures And History Presenting Hazards To Health"}, {"source": "Diseases Of The Circulatory System", "target": "Acute Rheumatic Fever"}, {"source": "Diseases Of The Circulatory System", "target": "Diseases Of Pulmonary Circulation"}, {"source": "Diseases Of The Circulatory System", "target": "Chronic Rheumatic Heart Disease"}, {"source": "Diseases Of The Circulatory System", "target": "Cerebrovascular Disease"}, {"source": "Diseases Of The Circulatory System", "target": "Diseases Of Veins And Lymphatics, And Other Diseases Of Circulatory System"}]};
     const svgElem = getForceLayoutElement(G.nodes, G.links, width, height);
     const svgContainer = document.getElementById("svgContainer");
     svgContainer.appendChild(svgElem);

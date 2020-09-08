@@ -1,0 +1,14 @@
+@import 'theme.css';
+
+.wy-side-nav-search .wy-dropdown > a, .wy-side-nav-search > a, .wy-side-nav-search > div.version {
+    color: black;
+}
+
+.node-text {
+    font-size: 6px !important;
+}
+
+.links {
+    stroke: #999;
+    stroke-opacity: 0.6;
+}
