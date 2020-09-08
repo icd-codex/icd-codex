@@ -1,14 +1,16 @@
 [![PyPI version fury.io](https://badge.fury.io/py/icdcodex.svg)](https://pypi.python.org/pypi/icdcodex/) [![Documentation Status](https://readthedocs.org/projects/icd-codex/badge/?version=latest)](http://icd-codex.readthedocs.io/?badge=latest) [![GitHub license](https://img.shields.io/github/license/icd-codex/icd-codex.svg)](https://github.com/icd-codex/icd-codex/blob/master/LICENSE)
 
-
 `icdcodex` was the first prize winner in the Data Driven Healthcare Track of John Hopkins' [MedHacks 2020](https://medhacks2020.devpost.com).
+
+<div id="svgContainer"></div>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="_static/js/viz-0.1.js"></script>
 
 ## Motivation
 
-> The International Classification of Diseases, Clinical Modification is used to code and classify morbidity data from the inpatient and outpatient records, physician offices, and most National Center for Health Statistics (NCHS) surveys.
-> [https://www.cdc.gov/nchs/icd/index.htm](https://www.cdc.gov/nchs/icd/index.htm)
+Thousands of Americans are wrongly misquoted on their health insurance yearly due to ICD miscodes. However, ICD coding is laborous it is difficult to automate by machine learning because the output space is enormous. For example, ICD-10 CM (clinical modification) has over 70,000 codes and growing. There are [many strategies](https://maxhalford.github.io/blog/target-encoding/) for label embedding that address these issues.
 
-Thousands of Americans are wrongly misquoted on their health insurance yearly due to ICD miscodes. However, ICD coding is laborous it is difficult to automate by machine learning because the output space is enormous. For example, ICD-10 CM (clinical modification) has over 70,000 codes and growing. `icdcodex` has two features that make ICD classification more amenable to modeling.
+ `icdcodex` has two features that make ICD classification more amenable to modeling.
 - Access to a networkx tree representation of the ICD9 and ICD10 hierarchies
 - Vector embeddings of ICD codes (including pre-computed embeddings and )
 
