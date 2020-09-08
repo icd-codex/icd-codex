@@ -12,7 +12,7 @@ Thousands of Americans are wrongly misquoted on their health insurance yearly du
 - Access to a networkx tree representation of the ICD9 and ICD10 hierarchies
 - Vector embeddings of ICD codes (including pre-computed embeddings and an interface to create new embeddings)
 
-## Example Usage
+## Example Code
 
 ```python
 from icdcodex import icd2vec, hierarchy
@@ -22,6 +22,11 @@ X = get_patient_covariates()
 y = embedder.to_vec(["A00.0"])  # Cholera due to vibrio cholerae
 ```
 In this case, `y` is a 64-dimensional vector close to other `Infectious And Parasitic Diseases` codes. 
+
+## Related Work
+- node2vec [Paper](https://cs.stanford.edu/people/jure/pubs/node2vec-kdd16.pdf), [Website](https://snap.stanford.edu/node2vec/), [Code](https://github.com/snap-stanford/snap/tree/master/examples/node2vec), [Alternate Code](https://github.com/eliorc/node2vec)
+- Learning Low-Dimensional Representations of Medical Concepts: [Paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5001761/), [Code](https://github.com/clinicalml/embeddings)
+- Projection Word Embedding Model With Hybrid Sampling Training for Classifying ICD-10-CM Codes [Paper](https://pubmed.ncbi.nlm.nih.gov/31339103/)
 
 ## The Hackathon Team
 - Jeremy Fisher (Maintainer)
