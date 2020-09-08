@@ -7,7 +7,7 @@
 <script src="_static/js/viz-0.1.js"></script>
 
 ## Motivation
-Thousands of Americans are misquoted on their health insurance yearly due to ICD miscodes. However, ICD coding is laborous it is difficult to automate by machine learning because the output space is enormous. For example, ICD-10 CM (clinical modification) has over 70,000 codes and growing. There are [many strategies](https://maxhalford.github.io/blog/target-encoding/) for label embedding that address these issues.
+Thousands of Americans are misquoted on their health insurance yearly due to ICD miscodes. While ICD coding is manual and laborous, it is difficult to automate by machine learning because the output space is enormous. For example, ICD-10 CM (clinical modification) has over 70,000 codes and growing. There are [many strategies](https://maxhalford.github.io/blog/target-encoding/) for label embedding that address these issues.
 
 `icdcodex` has two features that make ICD classification more amenable to modeling:
 - Access to a `networkx` tree representation of the ICD9 and ICD10 hierarchies
