@@ -32,13 +32,13 @@ You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/jeremyadamsfisher/icdcodex
+    $ git clone git://github.com/icd-codex/icd-codex
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl -OJL https://github.com/jeremyadamsfisher/icdcodex/tarball/master
+    $ curl -OJL https://github.com/icd-codex/icd-codex/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +47,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/jeremyadamsfisher/icdcodex
-.. _tarball: https://github.com/jeremyadamsfisher/icdcodex/tarball/master
+.. _Github repo: https://github.com/icd-codex/icd-codex
+.. _tarball: https://github.com/icd-codex/icd-codex/tarball/master
