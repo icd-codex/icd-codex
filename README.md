@@ -6,6 +6,10 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="_static/js/viz-0.1.js"></script>
 
+```{admonition} Experimental 
+This is experimental software and a stable API is not expected until version 1.0
+```
+
 ## Motivation
 Thousands of Americans are misquoted on their health insurance yearly due to ICD miscodes. While ICD coding is manual and laborous, it is difficult to automate by machine learning because the output space is enormous. For example, ICD-10 CM (clinical modification) has over 70,000 codes and growing. There are [many strategies](https://maxhalford.github.io/blog/target-encoding/) for label embedding that address these issues.
 
