@@ -2,9 +2,9 @@
 
 `icdcodex` was the first prize winner in the Data Driven Healthcare Track of John Hopkins' [MedHacks 2020](https://medhacks2020.devpost.com).
 
-:::{admonition,warning} This *is* also **Markdown**
-This text is **standard** _Markdown_
-:::
+```{admonition,warning} Experimental 
+This is experimental software and a stable API is not expected until version 1.0
+```
 
 ## Motivation
 Thousands of Americans are misquoted on their health insurance yearly due to ICD miscodes. While ICD coding is manual and laborous, it is difficult to automate by machine learning because the output space is enormous. For example, ICD-10 CM (clinical modification) has over 70,000 codes and growing. There are [many strategies](https://maxhalford.github.io/blog/target-encoding/) for label embedding that address these issues.
