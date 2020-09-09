@@ -1,12 +1,21 @@
 # Usage
 
-To use icdcodex in a python data stack project:
+## `networkx` hierarchy
+
+```python
+from icdcodex import hierarchy
+icd9_hierarchy, icd9_codes = hierarchy.icd9hierarchy())
+```
+
+## Continuous Embedding
+
+To use `icdcodex`'s continuous embedding in a python data stack project:
 
 ```python
 from icdcodex import icd2vec, hierarchy
 embedder = icd2vec.Icd2Vec(num_embedding_dimensions=64)
 embedder.fit(*hierarchy.icd9hierarchy())
-y = embedder.to_vec(["A00.0"])  # Cholera due to vibrio cholerae
+y = embedder.to_vec(["001.0"])  # Cholera due to vibrio cholerae
 ```
 
 In this case, `y` is a 64-dimensional vector close to other `Infectious And Parasitic Diseases` codes. For a more involved example, we'll build a scikit-learn pipeline. To get our data, we'll use [MIMIC-III](https://mimic.physionet.org/gettingstarted/demo/). A demo version can be accessed through the [GCP Big Query service](https://cloud.google.com/bigquery/) by running `ADD DATA > Pin a project > Enter a project name > 

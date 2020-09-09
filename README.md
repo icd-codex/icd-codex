@@ -2,11 +2,7 @@
 
 `icdcodex` was the first prize winner in the Data Driven Healthcare Track of John Hopkins' [MedHacks 2020](https://medhacks2020.devpost.com).
 
-<div id="svgContainer"></div>
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<script src="_static/js/viz-0.1.js"></script>
-
-```{admonition} Experimental 
+```{admonition,warning} Experimental 
 This is experimental software and a stable API is not expected until version 1.0
 ```
 
