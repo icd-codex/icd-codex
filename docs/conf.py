@@ -38,7 +38,7 @@ extensions = [
     'sphinx_rtd_theme',
     'myst_parser'
 ]
-myst_admonition_enable = True
+# myst_admonition_enable = True
 autosectionlabel_prefix_document = True
 
 # Add any paths that contain templates here, relative to this directory.
