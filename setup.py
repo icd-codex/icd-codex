@@ -13,7 +13,7 @@ with open('HISTORY.rst') as history_file:
 requirements = [
     'networkx',
     'node2vec',
-    'xmltodict',
+    'untangle',
     'sklearn',
     'pandas'
 ]
