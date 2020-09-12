@@ -15,7 +15,8 @@ requirements = [
     'node2vec',
     'untangle',
     'sklearn',
-    'pandas'
+    'pandas',
+    'requests'
 ]
 
 setup_requirements = ['pytest-runner', ]

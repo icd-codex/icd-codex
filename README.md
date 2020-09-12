@@ -1,4 +1,4 @@
-[![PyPI version fury.io](https://badge.fury.io/py/icdcodex.svg)](https://pypi.python.org/pypi/icdcodex/) [![Documentation Status](https://readthedocs.org/projects/icd-codex/badge/?version=latest)](http://icd-codex.readthedocs.io/?badge=latest) [![GitHub license](https://img.shields.io/github/license/icd-codex/icd-codex.svg)](https://github.com/icd-codex/icd-codex/blob/master/LICENSE)
+[![PyPI version fury.io](https://badge.fury.io/py/icdcodex.svg)](https://pypi.python.org/pypi/icdcodex/) [![Documentation Status](https://readthedocs.org/projects/icd-codex/badge/?version=latest)](http://icd-codex.readthedocs.io/?badge=latest) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![GitHub license](https://img.shields.io/github/license/icd-codex/icd-codex.svg)](https://github.com/icd-codex/icd-codex/blob/master/LICENSE)
 
 `icdcodex` was the first prize winner in the Data Driven Healthcare Track of John Hopkins' [MedHacks 2020](https://medhacks2020.devpost.com).
 
