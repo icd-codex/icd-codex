@@ -13,9 +13,10 @@ with open('HISTORY.rst') as history_file:
 requirements = [
     'networkx',
     'node2vec',
-    'xmltodict',
+    'untangle',
     'sklearn',
-    'pandas'
+    'pandas',
+    'requests'
 ]
 
 setup_requirements = ['pytest-runner', ]
@@ -47,6 +48,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/icd-codex/icd-codex',
-    version='0.3.0',
+    version='0.4.0',
     zip_safe=True,
 )
