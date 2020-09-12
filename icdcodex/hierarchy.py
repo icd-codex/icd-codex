@@ -1,6 +1,6 @@
 """deserialize icd hierarchies computed in datacleaning.py"""
 
-from typing import Literal, Optional, Sequence, Tuple
+from typing import Optional, Sequence, Tuple
 import json
 import importlib
 from datetime import datetime
@@ -23,9 +23,7 @@ def icd9() -> Tuple[nx.Graph, Sequence[str]]:
     )
 
 
-def icd10cm(
-    version: Optional[Literal["2019", "2020", "2020"]] = None
-) -> Tuple[nx.Graph, Sequence[str]]:
+def icd10cm(version: Optional[str] = None) -> Tuple[nx.Graph, Sequence[str]]:
     """deserialize icd-10-cm hierarchy
 
     Args:
@@ -37,6 +35,7 @@ def icd10cm(
     """
     if version is None:
         version = datetime.now().year
+    assert version in ["2019", "2020", "2020"]
     with importlib.resources.open_binary(data, f"icd-10-{version}-hierarchy.json") as f:
         hierarchy = f.read().decode("utf-8")
         hierarchy = json.loads(hierarchy)
