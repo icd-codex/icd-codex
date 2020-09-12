@@ -17,7 +17,7 @@ Thousands of Americans are misquoted on their health insurance yearly due to ICD
 ```python
 from icdcodex import icd2vec, hierarchy
 embedder = icd2vec.Icd2Vec(num_embedding_dimensions=64)
-embedder.fit(*hierarchy.icd9hierarchy())
+embedder.fit(*hierarchy.icd9())
 X = get_patient_covariates()
 y = embedder.to_vec(["001.0"])  # Cholera due to vibrio cholerae
 ```

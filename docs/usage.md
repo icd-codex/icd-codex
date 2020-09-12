@@ -2,10 +2,23 @@
 
 ## `networkx` hierarchy
 
+To get the `networkx` hierarchy:
+
 ```python
 from icdcodex import hierarchy
-icd9_hierarchy, icd9_codes = hierarchy.icd9hierarchy())
+icd_10_cm_hierarchy, icd_10_cm_codes = hierarchy.icd10cm("2020")
 ```
+
+To visualize at least a portion of the hierarchy:
+
+```python
+import networkx as nx
+G = nx.relabel_nodes(G, {"root": "ICD-10-CM"})
+G_chapters = bfs(G, "ICD-10-CM", depth_limit=1)
+plt.figure(figsize=(8,8))
+nx.draw(G_chapters, with_labels=True, font_weight='bold')
+```
+![chapters](_static/imgs/usage/icd10-chapters.png)
 
 ## Continuous Embedding
 
@@ -14,9 +27,11 @@ To use `icdcodex`'s continuous embedding in a python data stack project:
 ```python
 from icdcodex import icd2vec, hierarchy
 embedder = icd2vec.Icd2Vec(num_embedding_dimensions=64)
-embedder.fit(*hierarchy.icd9hierarchy())
+embedder.fit(*hierarchy.icd9())
 y = embedder.to_vec(["001.0"])  # Cholera due to vibrio cholerae
 ```
+
+## Example Use Case: Predicting MIMIC-III diagnostic codes
 
 In this case, `y` is a 64-dimensional vector close to other `Infectious And Parasitic Diseases` codes. For a more involved example, we'll build a scikit-learn pipeline. To get our data, we'll use [MIMIC-III](https://mimic.physionet.org/gettingstarted/demo/). A demo version can be accessed through the [GCP Big Query service](https://cloud.google.com/bigquery/) by running `ADD DATA > Pin a project > Enter a project name > 
 physionet-data`.
