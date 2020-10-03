@@ -2,6 +2,7 @@
 
 """The setup script."""
 
+import sys
 from setuptools import setup, find_packages
 
 with open('README.md') as readme_file:
@@ -18,7 +19,9 @@ requirements = [
     'pandas',
     'requests'
 ]
-
+if sys.version_info < (3,9):
+    requirements.append("importlib-resources")
+    
 setup_requirements = ['pytest-runner', ]
 
 test_requirements = ['pytest>=3', ]
