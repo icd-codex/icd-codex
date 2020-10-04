@@ -44,7 +44,7 @@ def main():
             json.dump(j, f)
 
 
-## -------- ICD 9 ------------ ##
+# -------- ICD 9 ------------ #
 
 
 def build_icd9_hierarchy_from_url(
@@ -108,11 +108,11 @@ def build_icd9_hierarchy(fp, root_name=None):
     icd_codes = hierarchy.icd9.unique()
     assert not any(
         code for code in icd_codes if code not in G.nodes()
-    ), f"some codes are not represented in the networkx hierarchy!"
+    ), "some codes are not represented in the networkx hierarchy!"
     return G, icd_codes
 
 
-## -------- ICD 10 CM -------- ##
+# -------- ICD 10 CM -------- #
 
 
 def build_icd10_hierarchy_from_url(
