@@ -1,5 +1,8 @@
 # History
 
+## 0.4.3 (2020-10-04)
+- Fix issue where hierarchy jsons were not being shipped with the pypi distribution
+
 ## 0.4.2 (2020-10-03)
 - Add support for python <= 3.8 in the `hierarchy` module by using the `importlib.resources` backport
 
