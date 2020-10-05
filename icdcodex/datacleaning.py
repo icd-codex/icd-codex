@@ -2,6 +2,7 @@
 
 
 from typing import List, Optional
+import warnings
 import tempfile
 import re
 import json
@@ -44,7 +45,7 @@ def main():
             json.dump(j, f)
 
 
-## -------- ICD 9 ------------ ##
+# -------- ICD 9 ------------ #
 
 
 def build_icd9_hierarchy_from_url(
@@ -108,15 +109,15 @@ def build_icd9_hierarchy(fp, root_name=None):
     icd_codes = hierarchy.icd9.unique()
     assert not any(
         code for code in icd_codes if code not in G.nodes()
-    ), f"some codes are not represented in the networkx hierarchy!"
+    ), "some codes are not represented in the networkx hierarchy!"
     return G, icd_codes
 
 
-## -------- ICD 10 CM -------- ##
+# -------- ICD 10 CM -------- #
 
 
 def build_icd10_hierarchy_from_url(
-    code_desc_url, code_table_url, root_name: Optional[str] = None
+    code_desc_url, code_table_url, root_name: Optional[str] = None, return_intermediates = False
 ):
     """build the icd10 hierarchy by downloading from cms.gov
 
@@ -124,6 +125,7 @@ def build_icd10_hierarchy_from_url(
         code_desc_url (str): url to the "Code Descriptions in Tabular Order (ZIP)" file
         code_table_url (str): url to the "Code Tables and Index (ZIP)" file
         root_name (str, option): arbitrary name for the root of the hierarchy. Defaults to "root."
+        return_intermediates (bool): If True, return the untangle element and codes. Defaults to False.
 
     Returns:
         Tuple[nx.Graph, List[str]]: icd10 hierarchy and ICD-10-CM codes
@@ -135,11 +137,11 @@ def build_icd10_hierarchy_from_url(
         desc_f.seek(0)
         table_f.write(requests.get(code_table_url).content)
         table_f.seek(0)
-        return build_icd10cm_hierarchy_from_zip(desc_f.name, table_f.name, root_name)
+        return build_icd10cm_hierarchy_from_zip(desc_f.name, table_f.name, root_name, return_intermediates)
 
 
 def build_icd10cm_hierarchy_from_zip(
-    code_desc_zip_fp, code_table_zip_fp, root_name: Optional[str] = None
+    code_desc_zip_fp, code_table_zip_fp, root_name: Optional[str] = None, return_intermediates = False
 ):
     """build the icd10 hierarchy from zip files downloaded from cms.gov
 
@@ -147,6 +149,7 @@ def build_icd10cm_hierarchy_from_zip(
         code_desc_zip_fp (Pathlike): file path to the "Code Descriptions in Tabular Order (ZIP)" file
         code_table_zip_fp ([type]): file path to the "Code Tables and Index (ZIP)" file
         root_name (str, option): arbitrary name for the root of the hierarchy. Defaults to "root."
+        return_intermediates (bool): If True, return the untangle element and codes. Defaults to False.
 
     Returns:
         Tuple[nx.Graph, List[str]]: icd10 hierarchy and ICD-10-CM codes
@@ -170,11 +173,16 @@ def build_icd10cm_hierarchy_from_zip(
         ]
         with z.open(code_table_fp, "r") as f:
             e = untangle.parse(f)
+    if return_intermediates:
+        return build_icd10_hierarchy(e, codes, root_name), e, codes
     return build_icd10_hierarchy(e, codes, root_name)
 
 
 def build_icd10_hierarchy(
-    xml_root: untangle.Element, codes: List[str], root_name: Optional[str] = None
+    xml_root: untangle.Element,
+    codes: List[str],
+    root_name: Optional[str] = None,
+    prune_extra_codes: bool = True,
 ):
     """build the icd10 hierarchy
 
@@ -185,7 +193,7 @@ def build_icd10_hierarchy(
         xml_root (untangle.Element): root element of the code table XML
         codes (List[str]): list of ICD codes
         root_name (str, option): arbitrary name for the root of the hierarchy. Defaults to "root."
-
+        prune_extra_codes (bool): If True, remove any leaf node not specified in `codes`
     Returns:
         Tuple[nx.Graph, List[str]]: icd10 hierarchy and ICD-10-CM codes
     """
@@ -209,7 +217,11 @@ def build_icd10_hierarchy(
                 for diag_elem in diag_elems:
                     traverse_diag(G, section, diag_elem)
     leafs = [n for n in G.nodes() if G.degree[n] == 1]
-    G.remove_nodes_from(leaf for leaf in leafs if leaf not in codes)
+    if root_name in leafs:
+        warnings.warn(UserWarning(f"parsing strangeness, root node `{root_name}` is a leaf"))
+    if prune_extra_codes:
+        codes_ = set(codes)
+        G.remove_nodes_from(leaf for leaf in leafs if leaf not in codes_)
     return G, codes
 
 

@@ -5,11 +5,12 @@
 import sys
 from setuptools import setup, find_packages
 
-with open('README.md') as readme_file:
-    readme = readme_file.read()
-
-with open('HISTORY.md') as history_file:
-    history = history_file.read()
+try:
+    with open('./README.md') as readme_file, open('./HISTORY.md') as history_file:
+        readme = readme_file.read()
+        history = history_file.read()
+except FileNotFoundError: # tox
+    readme = history = ""
 
 requirements = [
     'networkx',
