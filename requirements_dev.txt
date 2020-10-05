@@ -6,4 +6,5 @@ coverage==4.5.4
 twine==1.14.0
 pytest==4.6.5
 pytest-runner==5.1
-watchdog
+watchdog==0.10.3
+tox-wheel==0.5.0

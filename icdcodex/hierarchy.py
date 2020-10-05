@@ -37,8 +37,8 @@ def icd10cm(version: Optional[str] = None) -> Tuple[nx.Graph, Sequence[str]]:
         Tuple[nx.Graph, Sequence[str]]: ICD-10-CM hierarchy and codes
     """
     if version is None:
-        version = datetime.now().year
-    assert version in ["2019", "2020", "2020"]
+        version = str(datetime.now().year)
+    assert version in ["2019", "2020", "2021"]
     with importlib_resources.open_text(data, f"icd-10-{version}-hierarchy.json") as f:
         hierarchy = json.loads(f.read())
     return (
