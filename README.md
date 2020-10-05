@@ -21,7 +21,7 @@ from icdcodex import icd2vec, hierarchy
 embedder = icd2vec.Icd2Vec(num_embedding_dimensions=64)
 embedder.fit(*hierarchy.icd9())
 X = get_patient_covariates()
-y = embedder.to_vec(["001.0"])  # Cholera due to vibrio cholerae
+y = embedder.to_vec(["0010"])  # Cholera due to vibrio cholerae
 ```
 In this case, `y` is a 64-dimensional vector close to other `Infectious And Parasitic Diseases` codes. 
 
