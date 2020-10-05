@@ -6,7 +6,7 @@
 This is experimental software and a stable API is not expected until version 1.0
 ```
 ## What is it?
-A python library for providing vector representation of ICD-9 and ICD-10 codes. Because it takes advantage of the hierarchical nature of ICD codes, it also provides these hierarchies in a [`networkx`](https://networkx.github.io) format.
+A python library for building vector representations of ICD-9 and ICD-10 codes. Because it takes advantage of the hierarchical nature of ICD codes, it also provides these hierarchies in a [`networkx`](https://networkx.github.io) format.
 
 ## Motivation
 `icdcodex` was the first prize winner in the Data Driven Healthcare Track of John Hopkins' [MedHacks 2020](https://medhacks2020.devpost.com). It was hacked together to address the problem of [ICD](https://en.wikipedia.org/wiki/ICD-10) miscodes, which is a major issue for health insurance in the United States. Indeed, while ICD coding is tedious and labour intensive, it is not obvious how to automate because the output space is enourmous. For example, ICD-10 CM (clinical modification) has over 70,000 codes and growing.
