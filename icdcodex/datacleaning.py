@@ -220,7 +220,8 @@ def build_icd10_hierarchy(
     if root_name in leafs:
         warnings.warn(UserWarning(f"parsing strangeness, root node `{root_name}` is a leaf"))
     if prune_extra_codes:
-        G.remove_nodes_from(leaf for leaf in leafs if leaf not in codes)
+        codes_ = set(codes)
+        G.remove_nodes_from(leaf for leaf in leafs if leaf not in codes_)
     return G, codes
 
 
