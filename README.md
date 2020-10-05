@@ -1,7 +1,6 @@
 [![PyPI version fury.io](https://badge.fury.io/py/icdcodex.svg)](https://pypi.python.org/pypi/icdcodex/)
 [![Documentation Status](https://readthedocs.org/projects/icd-codex/badge/?version=latest)](http://icd-codex.readthedocs.io/?badge=latest)
-[![GitHub license](https://img.shields.io/github/license/icd-codex/icd-codex.svg)](https://github.com/icd-codex/icd-codex/blob/master/LICENSE)
-[![icd-codex](https://circleci.com/gh/icd-codex/icd-codex.svg?style=shield)](https://app.circleci.com/pipelines/github/icd-codex/icd-codex)
+[![icd-codex](https://circleci.com/gh/icd-codex/icd-codex.svg?style=shield)](https://circleci.com/gh/icd-codex/icd-codex)
 
 ```{admonition} Experimental 
 This is experimental software and a stable API is not expected until version 1.0
