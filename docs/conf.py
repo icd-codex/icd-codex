@@ -95,7 +95,7 @@ html_theme = 'sphinx_rtd_theme'
 # documentation.
 #
 html_theme_options = {
-    'logo_only': False,
+    'logo_only': True,
     'display_version': False,
     'style_nav_header_background': '#fcfcfc',
 }
@@ -105,7 +105,7 @@ html_theme_options = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 html_css_files = ['css/style-0.3.css']
-# html_logo = "logo.png"
+html_logo = "_static/imgs/logo/logo.png"
 
 
 # -- Options for HTMLHelp output ---------------------------------------
