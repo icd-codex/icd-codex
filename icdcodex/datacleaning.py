@@ -14,9 +14,6 @@ import pandas as pd
 import networkx as nx
 
 
-import math
-
-
 def main():
     G_icd9, codes_icd9 = build_icd9_hierarchy_from_url(
         "https://raw.githubusercontent.com/kshedden/icd9/master/icd9/resources/icd9Hierarchy.json"
