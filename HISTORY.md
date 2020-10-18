@@ -1,6 +1,8 @@
 # History
 
-## 0.4.3 (2020-10-04)
+## 0.4.4 and 0.4.5 (2020-10-18)
+- Add the code descriptions for ICD9
+- Add usage on how to recapitulate functionality of sirrice/icd9
 - Make the hierarchy directed to allow simpler and more intuitive traversal
 - Fix issue where edges were not being formed between "Diseases Of The Blood And Blood-Forming Organs" and "Congenital Anomalies" and their children
 
