@@ -81,10 +81,10 @@ def build_icd9_hierarchy(fp, root_name=None):
         root_name = "root"
     hierarchy = pd.read_json(fp)
     G = nx.Graph()
-    G.add_node("root_name")
+    G.add_node(root_name)
     for chapter in hierarchy.chapter.unique():
         G.add_node(chapter)
-        G.add_edge(chapter, "root_name")
+        G.add_edge(chapter, root_name)
     G.add_nodes_from(hierarchy.subchapter.unique())
     for chapter, child_df in hierarchy.groupby("chapter"):
         if chapter in [
