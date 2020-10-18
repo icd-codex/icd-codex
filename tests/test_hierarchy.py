@@ -20,5 +20,5 @@ def test_icd10cm(version):
     hierarchy.icd10cm("2021")
 ])
 def test_ensure_all_codes_present(hierarchy, codes):
-    for code in codes:
-        assert code in hierarchy.nodes()
+    missing_codes = [code for code in codes if code not in hierarchy.nodes]
+    assert not missing_codes, f"missing {missing_codes}"

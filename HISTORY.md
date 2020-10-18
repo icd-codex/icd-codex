@@ -1,6 +1,10 @@
 # History
 
 ## 0.4.3 (2020-10-04)
+- Make the hierarchy directed to allow simpler and more intuitive traversal
+- Fix issue where edges were not being formed between "Diseases Of The Blood And Blood-Forming Organs" and "Congenital Anomalies" and their children
+
+## 0.4.3 (2020-10-04)
 - Fix issue where hierarchy jsons were not being shipped with the pypi distribution
 
 ## 0.4.2 (2020-10-03)
