@@ -38,8 +38,9 @@ def main():
         (G_icd10cm_2021, codes_icd10cm_2021, "icd-10-2021-hierarchy.json",),
     ]:
         with open(outdir / fname, "w") as f:
+            root_node, *_ = nx.topological_sort(G)
             j = {
-                "graph": nx.readwrite.json_graph.node_link_data(G),
+                "tree": nx.readwrite.json_graph.tree_data(G, root_node),
                 "codes": sorted(codes),
             }
             json.dump(j, f)
@@ -96,7 +97,7 @@ def build_icd9_hierarchy(fp, root_name=None):
         for subchapter in child_df.subchapter.unique():
             G.add_node(subchapter)
             G.add_edge(chapter, subchapter)
-    icd_codes_with_subchapters = hierarchy.subchapter.isna()
+    icd_codes_with_subchapters = ~hierarchy.subchapter.isna()
     for parent_prop, child_prop, df in [
         ("chapter", "major", hierarchy[~icd_codes_with_subchapters]),
         ("subchapter", "major", hierarchy[icd_codes_with_subchapters]),
@@ -110,6 +111,7 @@ def build_icd9_hierarchy(fp, root_name=None):
     assert not any(
         code for code in icd_codes if code not in G.nodes()
     ), "some codes are not represented in the networkx hierarchy!"
+    G = nx.algorithms.traversal.breadth_first_search.bfs_tree(G, source=root_name)
     return G, icd_codes
 
 
@@ -222,6 +224,7 @@ def build_icd10_hierarchy(
     if prune_extra_codes:
         codes_ = set(codes)
         G.remove_nodes_from(leaf for leaf in leafs if leaf not in codes_)
+    G = nx.algorithms.traversal.breadth_first_search.bfs_tree(G, source=root_name)
     return G, codes
 
 
