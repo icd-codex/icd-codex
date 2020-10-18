@@ -14,6 +14,9 @@ import pandas as pd
 import networkx as nx
 
 
+import math
+
+
 def main():
     G_icd9, codes_icd9 = build_icd9_hierarchy_from_url(
         "https://raw.githubusercontent.com/kshedden/icd9/master/icd9/resources/icd9Hierarchy.json"
@@ -81,11 +84,10 @@ def build_icd9_hierarchy(fp, root_name=None):
     if root_name is None:
         root_name = "root"
     hierarchy = pd.read_json(fp)
-    G = nx.Graph()
+    G = nx.DiGraph()
     G.add_node(root_name)
     for chapter in hierarchy.chapter.unique():
-        G.add_node(chapter)
-        G.add_edge(chapter, root_name)
+        G.add_edge(root_name, chapter)
     G.add_nodes_from(hierarchy.subchapter.unique())
     for chapter, child_df in hierarchy.groupby("chapter"):
         if chapter in [
@@ -95,23 +97,26 @@ def build_icd9_hierarchy(fp, root_name=None):
             # no sub-chapters
             continue
         for subchapter in child_df.subchapter.unique():
-            G.add_node(subchapter)
             G.add_edge(chapter, subchapter)
     icd_codes_with_subchapters = ~hierarchy.subchapter.isna()
     for parent_prop, child_prop, df in [
         ("chapter", "major", hierarchy[~icd_codes_with_subchapters]),
         ("subchapter", "major", hierarchy[icd_codes_with_subchapters]),
-        ("major", "icd9", hierarchy),
     ]:
         for parent, child_df in df.groupby(parent_prop):
             for child in child_df[child_prop].unique():
-                G.add_node(str(child))
-                G.add_edge(str(child), str(parent))
+                G.add_edge(str(parent), str(child))
+    icd9_descriptions = {}
+    for parent, icd_df in hierarchy.groupby("major"):
+        for _, icd in icd_df.iterrows():
+            icd9_descriptions[icd.icd9] = {"description": icd.descLong}
+            G.add_edge(str(parent), icd.icd9)
     icd_codes = hierarchy.icd9.unique()
     assert not any(
         code for code in icd_codes if code not in G.nodes()
     ), "some codes are not represented in the networkx hierarchy!"
     G = nx.algorithms.traversal.breadth_first_search.bfs_tree(G, source=root_name)
+    nx.set_node_attributes(G, icd9_descriptions)
     return G, icd_codes
 
 

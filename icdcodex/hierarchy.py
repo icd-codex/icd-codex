@@ -21,7 +21,10 @@ def icd9() -> Tuple[nx.Graph, Sequence[str]]:
     with importlib_resources.open_text(data, "icd-9-hierarchy.json") as f:
         hierarchy = json.load(f)
     return (
-        nx.readwrite.json_graph.tree_graph(hierarchy["tree"]),
+        nx.readwrite.json_graph.tree_graph(
+            hierarchy["tree"],
+            attrs=dict(id='id', children='children', description='description')
+        ),
         hierarchy["codes"],
     )
 
