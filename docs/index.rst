@@ -8,6 +8,7 @@ Welcome to icdcodex's documentation!
    readme
    installation
    usage
+   sirrice
    modules
    contributing
    history
