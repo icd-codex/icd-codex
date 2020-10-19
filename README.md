@@ -1,6 +1,7 @@
 [![PyPI version fury.io](https://badge.fury.io/py/icdcodex.svg)](https://pypi.python.org/pypi/icdcodex/)
 [![Documentation Status](https://readthedocs.org/projects/icd-codex/badge/?version=latest)](http://icd-codex.readthedocs.io/?badge=latest)
 [![icd-codex](https://circleci.com/gh/icd-codex/icd-codex.svg?style=shield)](https://circleci.com/gh/icd-codex/icd-codex)
+[![Build Status](http://circleci-badges-max.herokuapp.com/img/github/icd-codex/icd-codex?token=)](https://app.circleci.com/pipelines/github/icd-codex/icd-codex)
 [![Downloads](https://pepy.tech/badge/icdcodex)](https://pepy.tech/project/icdcodex)
 
 ```{admonition} Experimental 
