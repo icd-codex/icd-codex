@@ -2,6 +2,7 @@
 [![Documentation Status](https://readthedocs.org/projects/icd-codex/badge/?version=latest)](http://icd-codex.readthedocs.io/?badge=latest)
 [![icd-codex](https://circleci.com/gh/icd-codex/icd-codex.svg?style=shield)](https://circleci.com/gh/icd-codex/icd-codex)
 [![Downloads](https://pepy.tech/badge/icdcodex)](https://pepy.tech/project/icdcodex)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4300935.svg)](https://doi.org/10.5281/zenodo.4300935)
 
 ```{admonition} Experimental 
 This is experimental software and a stable API is not expected until version 1.0
