@@ -1,5 +1,8 @@
 # History
 
+## 0.4.6 (2022-10-13)
+- Add 2022 ICD-10-CM (thank you @keithcallenberg!)
+
 ## 0.4.4 and 0.4.5 (2020-10-18)
 - Add the code descriptions for ICD9
 - Add usage on how to recapitulate functionality of sirrice/icd9
