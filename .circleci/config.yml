@@ -1,11 +1,11 @@
 version: 2
 jobs:
-  build:  # required for runs that don't use workflows
+  build: # required for runs that don't use workflows
     working_directory: ~/build
     docker:
-      - image: themattrix/tox
+      - image: kiwicom/tox
     steps:
-      - checkout  # checkout source code to working directory
+      - checkout # checkout source code to working directory
       - run: pip install -r requirements_dev.txt
       - run: tox -e py36 -- --junitxml=test-results/py36.xml
       - run: tox -e py37 -- --junitxml=test-results/py37.xml
