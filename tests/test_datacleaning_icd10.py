@@ -7,6 +7,7 @@ from icdcodex import hierarchy, datacleaning
     hierarchy.icd10cm("2019"),
     hierarchy.icd10cm("2020"),
     hierarchy.icd10cm("2021"),
+    hierarchy.icd10cm("2022"),
 ])
 class TestAllRevisionsOfICD10CM:
 
