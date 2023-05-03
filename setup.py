@@ -16,7 +16,7 @@ requirements = [
     'networkx',
     'node2vec',
     'untangle',
-    'sklearn',
+    'scikit-learn',
     'pandas',
     'requests'
 ]
