@@ -1,8 +1,10 @@
 # History
 
-## 0.4.7 (2023-05-02)
+## 0.4.8 (2023-05-02)
 
-- Use the newer scikit-learn PyPi location
+- Use the newer scikit-learn PyPI location
+- Deprecate the Python 3.6 version
+- Add 2023 ICD-10-CM
 
 ## 0.4.6 (2022-10-13)
 
