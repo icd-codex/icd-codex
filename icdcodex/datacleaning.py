@@ -37,6 +37,10 @@ def main():
         "https://www.cms.gov/files/zip/2022-code-descriptions-tabular-order-updated-02012022.zip",
         "https://www.cms.gov/files/zip/2022-code-tables-tabular-and-index-updated-02012022.zip",     
     )
+    G_icd10cm_2023, codes_icd10cm_2023 = build_icd10_hierarchy_from_url(
+        "https://www.cms.gov/files/zip/2023-code-descriptions-tabular-order-updated-01/11/2023.zip",
+        "https://www.cms.gov/files/zip/2023-code-tables-tabular-and-index-updated-01/11/2023.zip",
+    )
     outdir = Path("icdcodex/data")
     for G, codes, fname in [
         (G_icd9, codes_icd9, "icd-9-hierarchy.json"),
@@ -44,6 +48,7 @@ def main():
         (G_icd10cm_2020, codes_icd10cm_2020, "icd-10-2020-hierarchy.json",),
         (G_icd10cm_2021, codes_icd10cm_2021, "icd-10-2021-hierarchy.json",),
         (G_icd10cm_2022, codes_icd10cm_2022, "icd-10-2022-hierarchy.json",),
+        (G_icd10cm_2023, codes_icd10cm_2023, "icd-10-2023-hierarchy.json",),
     ]:
         with open(outdir / fname, "w") as f:
             root_node, *_ = nx.topological_sort(G)
