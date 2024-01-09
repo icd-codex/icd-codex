@@ -243,8 +243,14 @@ def build_icd10_hierarchy(
     if prune_extra_codes:
         codes_ = set(codes)
         G.remove_nodes_from(leaf for leaf in leafs if leaf not in codes_)
-    G = nx.algorithms.traversal.breadth_first_search.bfs_tree(G, source=root_name)
-    return G, codes
+    G_directed = nx.algorithms.traversal.breadth_first_search.bfs_tree(G, source=root_name)
+    # Iterate over the nodes in the graph and add back the description
+    for node in G_directed.nodes():
+        if node in G.nodes():
+            description = G.nodes[node].get("description", None)
+            if description:
+                G_directed.nodes[node]["description"] = description
+    return G_directed, codes
 
 
 def traverse_diag(G, parent, untangle_elem, extensions=None):
@@ -261,8 +267,8 @@ def traverse_diag(G, parent, untangle_elem, extensions=None):
         extensions (List[Tuple[str,str]], optional): Seventh character extensions and related descriptions. Defaults to None.
     """
     self = untangle_elem.name.cdata
-    desc = untangle_elem.desc.cdata
-    G.add_node(self, desc=desc)
+    description = untangle_elem.desc.cdata
+    G.add_node(self, description=description)
     G.add_edge(self, parent)
     try:
         extension_elems = untangle_elem.sevenChrDef.extension
@@ -288,7 +294,7 @@ def traverse_diag(G, parent, untangle_elem, extensions=None):
                 else:  # e.g. E09.37 -> E09.37X1
                     num_xs_needed = 8 - len(self) - len(extension)
                     extension = ("X" * num_xs_needed) + extension
-                G.add_node(self + extension, desc=desc + " " + extension_desc)
+                G.add_node(self + extension, description=description + " " + extension_desc)
                 G.add_edge(self + extension, self)
     else:
         for child in children:
