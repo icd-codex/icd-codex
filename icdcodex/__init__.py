@@ -1,6 +1,6 @@
 __author__ = """Jeremy Fisher"""
 __email__ = "jeremyf@cmu.edu"
-__version__ = "__version__ = '0.4.8'"
+__version__ = "__version__ = '0.4.9'"
 
 from . import hierarchy, icd2vec
 
