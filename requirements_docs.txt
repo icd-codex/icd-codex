@@ -1,7 +1,7 @@
 myst-parser
 sphinx-rtd-theme
 myst-nb
-numpy==1.19.5
-scikit-learn==0.24.0
-networkx==2.5
-node2vec==0.4.0
+numpy
+scikit-learn
+networkx
+node2vec
