@@ -1,9 +1,10 @@
 # History
 
-## 0.5.0 and 0.4.9 (2024-01-08)
+## 0.4.9, 0.5.0 and 0.5.1 (2024-01-08)
 
 - Added 2024 ICD-10-CM
 - Fixed a bug where the node descriptions were being discarded
+- Regenerated the hierarchy files with the descriptions
 
 ## 0.4.8 (2023-05-02)
 
