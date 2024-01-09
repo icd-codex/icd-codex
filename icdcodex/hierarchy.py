@@ -33,7 +33,7 @@ def icd10cm(version: Optional[str] = None) -> Tuple[nx.Graph, Sequence[str]]:
     """deserialize icd-10-cm hierarchy
 
     Args:
-        version (str, optional): icd-10-cm version, including 2019 to 2023. If None, use the system
+        version (str, optional): icd-10-cm version, including 2019 to 2024. If None, use the system
             year. Defaults to None.
 
     Returns:
@@ -41,7 +41,11 @@ def icd10cm(version: Optional[str] = None) -> Tuple[nx.Graph, Sequence[str]]:
     """
     if version is None:
         version = str(datetime.now().year)
-    assert version in ["2019", "2020", "2021", "2022", "2023"]
+    if version not in ["2019", "2020", "2021", "2022", "2023", "2024"]:
+        raise ValueError(
+            f"icd-10-cm available from 2019 to 2024, but got {version}. If you want to use "
+            f"a more recent version, please open a GitHub issue at https://github.com/icd-codex/icd-codex"
+        )
     with importlib_resources.open_text(data, f"icd-10-{version}-hierarchy.json") as f:
         hierarchy = json.loads(f.read())
     return (
