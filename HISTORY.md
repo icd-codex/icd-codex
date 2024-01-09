@@ -1,5 +1,9 @@
 # History
 
+## 0.4.9 (2024-01-08)
+
+- Added 2024 ICD-10-CM
+
 ## 0.4.8 (2023-05-02)
 
 - Use the newer scikit-learn PyPI location
