@@ -86,3 +86,6 @@ install: clean ## install the package to the active Python's site-packages
 
 precompute_embeddings:
 	python icdcodex/datacleaning.py
+
+patch:
+	bump-my-version bump patch
