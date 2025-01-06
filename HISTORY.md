@@ -1,5 +1,14 @@
 # History
 
+## 0.5.2 (2025-01-05)
+
+- Added 2025 ICD-10-CM
+- Bumped deps
+- Removed EOL python's from CI
+- Fix bug where 2024 codes are being pulled from 2023
+- Fixed some flake8 bugs
+- Fixed use of deprecated field in [networkx](https://networkx.org/documentation/networkx-2.8.7/reference/readwrite/generated/networkx.readwrite.json_graph.tree_graph.html)
+
 ## 0.4.9, 0.5.0 and 0.5.1 (2024-01-08)
 
 - Added 2024 ICD-10-CM

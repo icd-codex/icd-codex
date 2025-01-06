@@ -8,6 +8,9 @@ from icdcodex import hierarchy, datacleaning
     hierarchy.icd10cm("2020"),
     hierarchy.icd10cm("2021"),
     hierarchy.icd10cm("2022"),
+    hierarchy.icd10cm("2023"),
+    hierarchy.icd10cm("2024"),
+    hierarchy.icd10cm("2025"),
 ])
 class TestAllRevisionsOfICD10CM:
 
@@ -63,6 +66,8 @@ sibling_xml = """\
         </section>
     </chapter>
 </ICD10CM.tabular>"""
+
+
 @pytest.mark.unit
 @pytest.mark.filterwarnings("ignore: parsing strangeness")  # this happens when root node has a single child
 def test_extension_added_from_sibling():
