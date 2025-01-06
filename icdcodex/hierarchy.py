@@ -21,10 +21,7 @@ def icd9() -> Tuple[nx.Graph, Sequence[str]]:
     with importlib_resources.open_text(data, "icd-9-hierarchy.json") as f:
         hierarchy = json.load(f)
     return (
-        nx.readwrite.json_graph.tree_graph(
-            hierarchy["tree"],
-            attrs=dict(id='id', children='children', description='description')
-        ),
+        nx.readwrite.json_graph.tree_graph(hierarchy["tree"]),
         hierarchy["codes"],
     )
 
@@ -41,9 +38,9 @@ def icd10cm(version: Optional[str] = None) -> Tuple[nx.Graph, Sequence[str]]:
     """
     if version is None:
         version = str(datetime.now().year)
-    if version not in ["2019", "2020", "2021", "2022", "2023", "2024"]:
+    if version not in ["2019", "2020", "2021", "2022", "2023", "2024", "2025"]:
         raise ValueError(
-            f"icd-10-cm available from 2019 to 2024, but got {version}. If you want to use "
+            f"icd-10-cm available from 2019 to 2025, but got {version}. If you want to use "
             f"a more recent version, please open a GitHub issue at https://github.com/icd-codex/icd-codex"
         )
     with importlib_resources.open_text(data, f"icd-10-{version}-hierarchy.json") as f:

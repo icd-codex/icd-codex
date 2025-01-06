@@ -13,8 +13,9 @@ import untangle
 import pandas as pd
 import networkx as nx
 
-# Note to self: to get these links in the future, go to https://www.cms.gov/medicare/coding-billing/icd-10-codes/latest-news
+# Note to self: to get these links in the future, go to https://www.cms.gov/medicare/coding-billing/icd-10-codes
 # and copy the links for the "20XX Code Descriptions in Tabular Order" and "20XX Code Tables, Tabular and Index" files
+
 
 def main():
     G_icd9, codes_icd9 = build_icd9_hierarchy_from_url(
@@ -34,15 +35,19 @@ def main():
     )
     G_icd10cm_2022, codes_icd10cm_2022 = build_icd10_hierarchy_from_url(
         "https://www.cms.gov/files/zip/2022-code-descriptions-tabular-order-updated-02012022.zip",
-        "https://www.cms.gov/files/zip/2022-code-tables-tabular-and-index-updated-02012022.zip",     
+        "https://www.cms.gov/files/zip/2022-code-tables-tabular-and-index-updated-02012022.zip",
     )
     G_icd10cm_2023, codes_icd10cm_2023 = build_icd10_hierarchy_from_url(
         "https://www.cms.gov/files/zip/2023-code-descriptions-tabular-order-updated-01/11/2023.zip",
         "https://www.cms.gov/files/zip/2023-code-tables-tabular-and-index-updated-01/11/2023.zip",
     )
     G_icd10cm_2024, codes_icd10cm_2024 = build_icd10_hierarchy_from_url(
-        "https://www.cms.gov/files/zip/2024-code-descriptions-tabular-order-updated-06/29/2023.zip",
-        "https://www.cms.gov/files/zip/2024-code-tables-tabular-and-index-updated-06/29/2023.zip",
+        "https://www.cms.gov/files/zip/2024-code-descriptions-tabular-order-updated-02/01/2024.zip",
+        "https://www.cms.gov/files/zip/2024-code-tables-tabular-and-index-updated-02/01/2024.zip",
+    )
+    G_icd10cm_2025, codes_icd10cm_2025 = build_icd10_hierarchy_from_url(
+        "https://www.cms.gov/files/zip/2025-code-descriptions-tabular-order.zip",
+        "https://www.cms.gov/files/zip/2025-code-tables-tabular-and-index.zip",
     )
     outdir = Path("icdcodex/data")
     for G, codes, fname in [
@@ -53,6 +58,7 @@ def main():
         (G_icd10cm_2022, codes_icd10cm_2022, "icd-10-2022-hierarchy.json",),
         (G_icd10cm_2023, codes_icd10cm_2023, "icd-10-2023-hierarchy.json",),
         (G_icd10cm_2024, codes_icd10cm_2024, "icd-10-2024-hierarchy.json",),
+        (G_icd10cm_2025, codes_icd10cm_2025, "icd-10-2025-hierarchy.json",),
     ]:
         with open(outdir / fname, "w") as f:
             root_node, *_ = nx.topological_sort(G)
@@ -138,7 +144,7 @@ def build_icd9_hierarchy(fp, root_name=None):
 
 
 def build_icd10_hierarchy_from_url(
-    code_desc_url, code_table_url, root_name: Optional[str] = None, return_intermediates = False
+    code_desc_url, code_table_url, root_name: Optional[str] = None, return_intermediates=False
 ):
     """build the icd10 hierarchy by downloading from cms.gov
 
@@ -162,7 +168,7 @@ def build_icd10_hierarchy_from_url(
 
 
 def build_icd10cm_hierarchy_from_zip(
-    code_desc_zip_fp, code_table_zip_fp, root_name: Optional[str] = None, return_intermediates = False
+    code_desc_zip_fp, code_table_zip_fp, root_name: Optional[str] = None, return_intermediates=False
 ):
     """build the icd10 hierarchy from zip files downloaded from cms.gov
 

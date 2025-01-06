@@ -3,11 +3,15 @@
 [![Downloads](https://pepy.tech/badge/icdcodex)](https://pepy.tech/project/icdcodex)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4300935.svg)](https://doi.org/10.5281/zenodo.4300935)
 
-```{admonition} Experimental 
-This is experimental software and a stable API is not expected until version 1.0
+```{admonition} Maintenance mode
+Thank you for your interest in ICD codex! I (Jeremy) wrote this in 2020 as part of class project and it has gotten quite a few downloads. However, since then, sequence representation has significantly improved. At this point, **I would not recommend using node2vec to represent ICD codes.** Instead, use a [language model](https://platform.openai.com/docs/guides/embeddings). The node2vec functionality is provided for compatibility with existing projects.
+
+The `networkx` hierarchy should still remains useful.
+
+If there is interest in extending this library for use with modern sequence learning algorithms, please reach out.
 ```
 ## What is it?
-A python library for building vector representations of ICD-9 and ICD-10 codes. Because it takes advantage of the hierarchical nature of ICD codes, it also provides these hierarchies in a [`networkx`](https://networkx.github.io) format.
+A python library for building vector representations of ICD-9 and ICD-10 codes. (2025 comment: the vector representations here are constructed using outdated algorithms.) Because it takes advantage of the hierarchical nature of ICD codes, it also provides these hierarchies in a [`networkx`](https://networkx.github.io) format. (2025 comment: this data structure should still remain useful.)
 
 ## Motivation
 `icdcodex` was the first prize winner in the Data Driven Healthcare Track of John Hopkins' [MedHacks 2020](https://medhacks2020.devpost.com). It was hacked together to address the problem of [ICD](https://en.wikipedia.org/wiki/ICD-10) miscodes, which is a major issue for health insurance in the United States. Indeed, while ICD coding is tedious and labour intensive, it is not obvious how to automate because the output space is enourmous. For example, ICD-10 CM (clinical modification) has over 70,000 codes and growing.
