@@ -6,7 +6,7 @@
 ```{admonition} Maintenance mode
 Thank you for your interest in ICD codex! I (Jeremy) wrote this in 2020 as part of class project and it has gotten quite a few downloads. However, since then, sequence representation has significantly improved. At this point, **I would not recommend using node2vec to represent ICD codes.** Instead, use a [language model](https://platform.openai.com/docs/guides/embeddings). The node2vec functionality is provided for compatibility with existing projects.
 
-The `networkx` hierarchy should still remains useful.
+The `networkx` hierarchy remains useful for your modeling requirements.
 
 If there is interest in extending this library for use with modern sequence learning algorithms, please reach out.
 ```
