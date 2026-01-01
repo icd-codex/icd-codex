@@ -49,16 +49,22 @@ def main():
         "https://www.cms.gov/files/zip/2025-code-descriptions-tabular-order.zip",
         "https://www.cms.gov/files/zip/2025-code-tables-tabular-and-index.zip",
     )
+    G_icd10cm_2026, codes_icd10cm_2026 = build_icd10_hierarchy_from_url(
+        "https://www.cms.gov/files/zip/april-1-2026-code-descriptions-tabular-order.zip",
+        "https://www.cms.gov/files/zip/april-1-2026-code-tables-tabular-index.zip",
+    )
+
     outdir = Path("icdcodex/data")
     for G, codes, fname in [
         (G_icd9, codes_icd9, "icd-9-hierarchy.json"),
-        (G_icd10cm_2019, codes_icd10cm_2019, "icd-10-2019-hierarchy.json",),
-        (G_icd10cm_2020, codes_icd10cm_2020, "icd-10-2020-hierarchy.json",),
-        (G_icd10cm_2021, codes_icd10cm_2021, "icd-10-2021-hierarchy.json",),
-        (G_icd10cm_2022, codes_icd10cm_2022, "icd-10-2022-hierarchy.json",),
-        (G_icd10cm_2023, codes_icd10cm_2023, "icd-10-2023-hierarchy.json",),
-        (G_icd10cm_2024, codes_icd10cm_2024, "icd-10-2024-hierarchy.json",),
-        (G_icd10cm_2025, codes_icd10cm_2025, "icd-10-2025-hierarchy.json",),
+        (G_icd10cm_2019, codes_icd10cm_2019, "icd-10-2019-hierarchy.json"),
+        (G_icd10cm_2020, codes_icd10cm_2020, "icd-10-2020-hierarchy.json"),
+        (G_icd10cm_2021, codes_icd10cm_2021, "icd-10-2021-hierarchy.json"),
+        (G_icd10cm_2022, codes_icd10cm_2022, "icd-10-2022-hierarchy.json"),
+        (G_icd10cm_2023, codes_icd10cm_2023, "icd-10-2023-hierarchy.json"),
+        (G_icd10cm_2024, codes_icd10cm_2024, "icd-10-2024-hierarchy.json"),
+        (G_icd10cm_2025, codes_icd10cm_2025, "icd-10-2025-hierarchy.json"),
+        (G_icd10cm_2026, codes_icd10cm_2026, "icd-10-2026-hierarchy.json"),
     ]:
         with open(outdir / fname, "w") as f:
             root_node, *_ = nx.topological_sort(G)
